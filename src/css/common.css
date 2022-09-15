@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  color: #212121;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.field {
+  width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  margin-left: 40px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.field:first-child {
+  margin-left: 0;
+}
+
+.value {
+  font-size: 40px;
+  font-weight: normal;
+}
+
+.label {
+  font-style: 24px;
+  color: darkblue;
+}
