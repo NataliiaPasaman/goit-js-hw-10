@@ -1,0 +1,2 @@
+document.querySelector("#search-box").addEventListener("input",(function(n){var e,t,c;e=n.currentTarget.value,t=new URLSearchParams({fields:"name,capital,population,flags,languages"}),c="https://restcountries.com/v3.1/name/".concat(e,"?").concat(t),fetch(c).then((function(n){return n.json()})).then((function(n){return console.log(n),n})).catch((function(n){return console.log(n)}))}));
+//# sourceMappingURL=index.6e7513d7.js.map
