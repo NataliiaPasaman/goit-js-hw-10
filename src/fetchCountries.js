@@ -3,10 +3,18 @@
  */
 
 export function fetchCountries(name) {
-  const url = `https://restcountries.com/v3.1/name/${name}`;
+  
+  const searchParams = new URLSearchParams({
+    fields: 'name,capital,population,flags,languages',
+  });
+  
+  const url = `https://restcountries.com/v3.1/name/${name}?${searchParams}`;
 
   return fetch(url)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data);
+      return data;
+    })
     .catch(error => console.log(error));
 }
