@@ -1,29 +1,36 @@
 import './css/styles.css';
 import { fetchCountries } from './fetchCountries.js';
+import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
 
+const listCountries = document.querySelector('.country-list');
 const fieldSearch = document.querySelector('#search-box');
-fieldSearch.addEventListener('input', onSearchCountry);
+fieldSearch.addEventListener('input', debounce(onSearchCountry, DEBOUNCE_DELAY));
 
 function onSearchCountry(event) {
-    const fieldValue = event.currentTarget.value;
+    const fieldValue = event.target.value;
 
-    fetchCountries(fieldValue);
+    fetchCountries(fieldValue)
+    .then(countries => renderMarkup(countries));
 }
 
-// const url = `https://restcountries.com/v3.1/name/peru`;
-// fetch(url)
-// .then(response => response.json())
-// .then(data => console.log(data));
 
-// function fetchCountries(name) {
-//     const url = `https://restcountries.com/v3.1/name/${name}`;
-//    return fetch(url)
-//    .then(response => response.json())
-//    .then(data => console.log(data));
-// }
+function renderMarkup (countries) {
+    const markup = countries.map(({ name, capital, languages, population, flags }) => {
+
+        return `<li>
+        <img src='${flags.svg}' width="40" height="40"/>
+        <h2>${name.common}</h2>
+        <p><b>Capital: </b>${capital}</p>
+        <p><b>Population: </b>${population}</p>
+        <p><b>Languages: </b>${(Object.values(languages)).join(', ')}</p>`
+    }).join("");
+
+    listCountries.insertAdjacentHTML('beforeend', markup);
+}
 
 
-// fetchCountries(peru);
+
+
 
