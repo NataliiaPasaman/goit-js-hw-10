@@ -11,6 +11,7 @@ const fieldSearch = document.querySelector('#search-box');
 
 fieldSearch.addEventListener('input', debounce(onSearchCountry, DEBOUNCE_DELAY));
 
+
 function onSearchCountry(event) {
   const searchName = event.target.value.trim();
 
@@ -22,13 +23,11 @@ function onSearchCountry(event) {
 
   fetchCountries(searchName)
     .then(countries => {
-      console.log(countries);
-
       showMessage(countries);
       findOneCountry(countries);
       findLessTenCountries(countries);
     })
-    .catch(error => console.log(error));
+    .catch(error => showError());
 }
 
 function showMessage(argsCountries) {
@@ -38,6 +37,15 @@ function showMessage(argsCountries) {
   }
 }
 
+
+function showError() {
+    resetInfo();
+    resetList();
+    Notify.failure('Oops, there is no country with that name');
+    return;
+}
+
+
 function findOneCountry(argsCountries) {
   if (argsCountries.length === 1) {
     resetList();
@@ -46,13 +54,16 @@ function findOneCountry(argsCountries) {
   }
 }
 
+
 function findLessTenCountries(argsCountries) {
   if (argsCountries.length >= 2 && argsCountries.length <= 10) {
     resetInfo();
+    resetList();
     renderListCountries(argsCountries);
     return;
   }
 }
+
 
 function renderListCountries(countriesArray) {
   const list = countriesArray
@@ -66,6 +77,7 @@ function renderListCountries(countriesArray) {
 
   listCountries.insertAdjacentHTML('beforeend', list);
 }
+
 
 function renderInfoCountry(countriesArray) {
   const markup = countriesArray
@@ -83,9 +95,11 @@ function renderInfoCountry(countriesArray) {
   infoCountries.insertAdjacentHTML('beforeend', markup);
 }
 
+
 function resetList() {
   listCountries.innerHTML = '';
 }
+
 
 function resetInfo() {
   infoCountries.innerHTML = '';
