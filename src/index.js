@@ -16,53 +16,48 @@ function onSearchCountry(event) {
   const searchName = event.target.value.trim();
 
   if (!searchName) {
-    resetInfo();
-    resetList();
+    resetCountries();
     return;
   }
 
   fetchCountries(searchName)
     .then(countries => {
-      showMessage(countries);
-      findOneCountry(countries);
-      findLessTenCountries(countries);
+      if (countries.length > 10) {
+        showMessage();
+      } else if (countries.length >= 2 && countries.length < 10) {
+        findLessTenCountries(countries);
+      } else {
+        findOneCountry(countries);
+      }
     })
     .catch(error => showError());
 }
 
-function showMessage(argsCountries) {
-  if (argsCountries.length > 10) {
-    Notify.info('Too many matches found. Please enter a more specific name.');
-    return;
-  }
-}
-
-
-function showError() {
-    resetInfo();
-    resetList();
-    Notify.failure('Oops, there is no country with that name');
-    return;
+function showMessage() {
+  resetCountries();
+  Notify.info('Too many matches found. Please enter a more specific name.');
+  return;
 }
 
 
 function findOneCountry(argsCountries) {
-  if (argsCountries.length === 1) {
-    resetInfo();
-    resetList();
-    renderInfoCountry(argsCountries);
-    return;
-  }
+  resetCountries();
+  renderInfoCountry(argsCountries);
+  return;
 }
 
 
 function findLessTenCountries(argsCountries) {
-  if (argsCountries.length >= 2 && argsCountries.length <= 10) {
-    resetInfo();
-    resetList();
-    renderListCountries(argsCountries);
-    return;
-  }
+  resetCountries();
+  renderListCountries(argsCountries);
+  return;
+}
+
+
+function showError() {
+  resetCountries();
+  Notify.failure('Oops, there is no country with that name');
+  return;
 }
 
 
@@ -97,11 +92,9 @@ function renderInfoCountry(countriesArray) {
 }
 
 
-function resetList() {
+function resetCountries() {
   listCountries.innerHTML = '';
-}
-
-
-function resetInfo() {
   infoCountries.innerHTML = '';
 }
+
+
