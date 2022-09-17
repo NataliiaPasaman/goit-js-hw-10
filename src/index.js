@@ -48,6 +48,7 @@ function showError() {
 
 function findOneCountry(argsCountries) {
   if (argsCountries.length === 1) {
+    resetInfo();
     resetList();
     renderInfoCountry(argsCountries);
     return;
@@ -67,10 +68,10 @@ function findLessTenCountries(argsCountries) {
 
 function renderListCountries(countriesArray) {
   const list = countriesArray
-    .map(({ name: { official }, flags: { svg } }) => {
+    .map(({ name: { common }, flags: { svg } }) => {
       return `<li class='item'>
         <img class='country-img' src='${svg}' width="30" height="20"/>
-        <h2 class='country-name'>${official}</h2>
+        <h2 class='country-name'>${common}</h2>
         </li>`;
     })
     .join('');
@@ -84,7 +85,7 @@ function renderInfoCountry(countriesArray) {
     .map(({ name, capital, languages, population, flags }) => {
       return `<div class='country-box'>
         <img class='country-img' src='${flags.svg}' width="50" height="40"/>
-        <h3 class='country-title'>${name.official}</h3>
+        <h3 class='country-title'>${name.common}</h3>
         </div>
         <p><b>Capital: </b>${capital}</p>
         <p><b>Population: </b>${population}</p>
